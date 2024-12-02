@@ -12,7 +12,7 @@ class Calibration():
     
     def __init__(self, step_w2: int, step_wc: int, w2_peak_range: list[float], wc_min_range: list[float], n_process: int) -> None:
         '''
-            Basic simulation parameeters
+            Basic simulation parameters
         '''
         
         self.step_w2 = step_w2
