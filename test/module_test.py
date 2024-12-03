@@ -30,13 +30,15 @@ if __name__ == "__main__":
     # print(H_test(1))
     
     # test visualization
-    data_address_fid = r"CZ_Calibration_Sample/test/data/Population of state 110-1.0.npy"
-    data_address_cphase = r"CZ_Calibration_Sample/test/data/Conditional phase of state 110-1.0.npy"
+    data_address_fid = r"CZ_Calibration_Example/test/data/Population of state 110-1.0.npy"
+    data_address_cphase = r"CZ_Calibration_Example/test/data/Conditional phase of state 110-1.0.npy"
+    optimal_data_save = r"CZ_Calibration_Example/test/data"
     Plotter = CalibrationPlot(step_w2, step_wc, w2_peak_range, wc_min_range, data_address_fid, data_address_cphase)
     
     fig, ax = plt.subplots(1, 2, figsize=[11, 6])
     Plotter.plot_fidelity(fig, ax[0])
     Plotter.plot_cphase(fig, ax[1])
+    Plotter.save_optimal(optimal_data_save, "1.0")
     
     plt.show()
     

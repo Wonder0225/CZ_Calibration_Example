@@ -105,9 +105,9 @@ class Calibration():
             os.makedirs('data')
         
         if target == 1:
-            filename = rf"CZ_Calibration_Sample/data/Population of state 110-{str(version)}.npy"
+            filename = rf"CZ_Calibration_Example/data/Population of state 110-{version}.npy"
         elif target == 2:
-            filename = rf"CZ_Calibration_Sample/data/Conditional phase of state 110-{str(version)}.npy"
+            filename = rf"CZ_Calibration_Example/data/Conditional phase of state 110-{version}.npy"
         else:
             print("Error: target not found!")
             assert False

@@ -6,7 +6,8 @@ import os
 class CalibrationPlot(Calibration):
     '''Plot figures for CZ gate calibration'''
     
-    def __init__(self, step_w2: int, step_wc: int, w2_peak_range: list[float], wc_min_range: list[float], data_address_fid: str = None, data_address_cphase: str = None, ): # type: ignore
+    def __init__(self, step_w2: int, step_wc: int, w2_peak_range: list[float], wc_min_range: list[float], data_address_fid: str = None, data_address_cphase: str = None): # type: ignore
+        '''Input Basic parameters for CZ calibration.'''
         
         super().__init__(step_w2, step_wc, w2_peak_range, wc_min_range, None) # type:ignore
         
@@ -26,10 +27,6 @@ class CalibrationPlot(Calibration):
             data = abs(self.data_fid*self.data_cphase)
             optimal_idx = np.argmax(data)
             self.optimal_idx = [int(np.floor(optimal_idx/step_w2)), int(optimal_idx-np.floor(optimal_idx/step_w2)*step_w2)]
-            
-            path = "CZ_Calibration_"
-            
-            np.save("")
         
         pass
         
@@ -63,4 +60,20 @@ class CalibrationPlot(Calibration):
         if self.if_optimal == True:
             ax.plot(self.optimal_idx[1], self.optimal_idx[0], 'r.')
 
+        pass
+    
+    def save_optimal(self, optimal_data_save: str, version: str):
+        '''Save the optimal point'''
+        
+        save_address = optimal_data_save + rf"/optimal parameters (wc, w2)-{version}.npy"
+        
+        if not os.path.exists('data'):
+            os.makedirs('data')
+            
+        if self.if_optimal == False:
+            print("Error: not enough data for calculating optimal point!")
+            assert self.if_optimal
+            
+        np.save(save_address, np.array([self.wc_min_array[self.optimal_idx[0]], self.w2_peak_array[self.optimal_idx[1]]]))
+            
         pass
