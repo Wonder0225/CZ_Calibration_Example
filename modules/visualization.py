@@ -65,7 +65,7 @@ class CalibrationPlot(Calibration):
     def save_optimal(self, optimal_data_save: str, version: str):
         '''Save the optimal point'''
         
-        save_address = optimal_data_save + rf"/optimal parameters (wc, w2)-{version}.npy"
+        save_address = optimal_data_save + rf"\optimal parameters (wc, w2)-{version}.npy"
         
         if not os.path.exists('data'):
             os.makedirs('data')
