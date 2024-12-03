@@ -1,7 +1,7 @@
 # coding: utf-8
 import numpy as np
-import matplotlib.pyplot as plt
 from modules.calibration import Calibration
+import os
 
 class CalibrationPlot(Calibration):
     '''Plot figures for CZ gate calibration'''
@@ -26,6 +26,10 @@ class CalibrationPlot(Calibration):
             data = abs(self.data_fid*self.data_cphase)
             optimal_idx = np.argmax(data)
             self.optimal_idx = [int(np.floor(optimal_idx/step_w2)), int(optimal_idx-np.floor(optimal_idx/step_w2)*step_w2)]
+            
+            path = "CZ_Calibration_"
+            
+            np.save("")
         
         pass
         
