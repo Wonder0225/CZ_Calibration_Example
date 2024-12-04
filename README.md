@@ -6,7 +6,7 @@ This is a simple but real example for superconducting circuit CZ gate calibratio
 This program has following functions:
 1. Solve the evolution of three qutrit system (q1-coupler-q2) in given qubit and coupler frequency.
 2. Calibrate optimal control point for control-Z gate.
-3. Execute quantum process tomography and visualize $\xi$ matrix.
+3. Execute quantum process tomography and visualize $\chi$ matrix.
 4. *working on it...*
 
 *To be mentioned, all the basic calculation procedures are done by **QuTip**.*
