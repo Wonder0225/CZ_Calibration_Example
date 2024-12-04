@@ -3,11 +3,7 @@ import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import matplotlib.pyplot as plt
 from modules.tomography import ProcessTomography, tomo_fidelity
-from modules.hamiltonian import Hamiltonian_RWA
-import numpy as np
-from qutip import mesolve, expect
-from modules.qutrit_operators import rho_110, psi_110
-from modules.gate_property import phase
+from qutip import about
 
 if __name__ == "__main__":
     
@@ -24,3 +20,4 @@ if __name__ == "__main__":
     print(chi_ideal.trace())
     
     # plt.show()
+    print(about())
