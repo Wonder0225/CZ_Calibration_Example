@@ -33,7 +33,7 @@ def cphase(H: Qobj, tg: float = 60) -> float:
     result_p00 = mesolve(H, rho_p00, tlist, [], [])
     result_p10 = mesolve(H, rho_p10, tlist, [], [])
     
-    rho2_p00_final = result_p00.states[-1].ptrace(1)
-    rho2_p10_final = result_p10.states[-1].ptrace(1)
+    rho2_p00_final = result_p00.states[-1].ptrace(0)
+    rho2_p10_final = result_p10.states[-1].ptrace(0)
     
     return phase(rho2_p00_final[0, 1], rho2_p10_final[0, 1])

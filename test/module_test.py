@@ -7,7 +7,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from modules import hamiltonian
 from modules.parameters import *
 from modules.visualization import CalibrationPlot
-from modules.gate_property import cphase
+from modules.gate_property import cphase, fidelity
 
 # calculate CZ properties
 n_process = 15
@@ -40,10 +40,7 @@ if __name__ == "__main__":
     Plotter.plot_cphase(fig, ax[1])
     Plotter.save_optimal(optimal_data_save, "1.0")
     
-    plt.show()
+    # plt.show()
     
     # test cphase calculation
-    # t0 = time.time()
     # cphase(H_test)
-    # t1 = time.time()
-    # print(f"Time cost: {t1-t0}")
