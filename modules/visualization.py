@@ -2,6 +2,22 @@
 import numpy as np
 from modules.calibration import Calibration
 import os
+from modules.pulse_generator import Pulse_Coupler, Pulse_Qubit2
+from modules.parameters import *
+
+def plot_waveform(args: dict, ax):
+    '''Visualize the waveform used in simulation'''
+
+    if args['if_tuning'] == False:
+        tlist = np.linspace(0, 60, 100)
+    else:
+        tlist = np.linspace(0, 60*args['repeat time'], 100*args['repeat time'])
+
+    ax.plot(tlist, Pulse_Coupler(tlist, args))
+    ax.plot(tlist, Pulse_Qubit2(tlist, args))
+    ax.plot(tlist, w1*np.ones(len(tlist)))
+
+    pass
 
 class CalibrationPlot(Calibration):
     '''Plot figures for CZ gate calibration'''

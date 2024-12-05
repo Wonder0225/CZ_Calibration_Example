@@ -11,7 +11,12 @@ def Pulse_Coupler(t: float, args: dict) -> float:
     wct = args['coupler frequency']
     tg = args['gate time']
 
-    output = wc - (wc - wct) * (special.erf(t) - special.erf(t - tg)) * 0.5
+    output = wc - (wc - wct) * (special.erf(t - np.e) - special.erf(t - tg + np.e)) * 0.5
+
+    if args['if_tuning'] == True:
+        n_repeat = args['repeat time']
+        for i in range(n_repeat-1):
+            output -= (wc - wct) * (special.erf(t-60*(i+1) - np.e) - special.erf(t-60*(i+1) - tg + np.e)) * 0.5
 
     return output
 
@@ -21,7 +26,12 @@ def Pulse_Qubit2(t: float, args: dict) -> float:
     w2t = args['qubit2 frequency']
     tg = args['gate time']
 
-    output = w2 - (w2 - w2t) * (special.erf(t) - special.erf(t - tg)) * 0.5
+    output = w2 - (w2 - w2t) * (special.erf(t - np.e) - special.erf(t - tg + np.e)) * 0.5
+
+    if args['if_tuning'] == True:
+        n_repeat = args['repeat time']
+        for i in range(n_repeat-1):
+            output -= (w2 - w2t) * (special.erf(t-60*(i+1) - np.e) - special.erf(t-60*(i+1) - tg + np.e)) * 0.5
 
     return output
 

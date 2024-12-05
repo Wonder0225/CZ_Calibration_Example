@@ -1,12 +1,16 @@
 # coding: utf-8
-from qutip import Qobj, mesolve, ket2dm
+from qutip import Qobj, mesolve
 import numpy as np
 from modules.qutrit_operators import rho_110, rho_p00, rho_p10
 
-def fidelity(H: Qobj, tg: float = 60) -> float:
+def fidelity(H: Qobj, tg: float = 60, args = None) -> float:
     '''Calculate CZ gate fidelity.'''
-    
-    tlist = np.linspace(0, tg, int(tg+5))
+
+    if args == None:
+        tlist = np.linspace(0, tg, int(tg+5))
+    else:
+        tlist = np.linspace(0, tg*args['repeat time'], 65*args['repeat time'])
+
     result = mesolve(H, rho_110, tlist, [], [rho_110])
     
     return result.expect[0][-1]
@@ -26,10 +30,14 @@ def phase(c0: complex, c1: complex) -> float:
     else:
         return np.arcsin(np.imag(z))
 
-def cphase(H: Qobj, tg: float = 60) -> float:
+def cphase(H: Qobj, tg: float = 60, args = None) -> float:
     '''Calculate conditional phase with Ramsey-type experiment'''
     
-    tlist = np.linspace(0, tg, int(tg+5))
+    if args == None:
+        tlist = np.linspace(0, tg, int(tg+5))
+    else:
+        tlist = np.linspace(0, tg*args['repeat time'], 65*args['repeat time'])
+
     result_p00 = mesolve(H, rho_p00, tlist, [], [])
     result_p10 = mesolve(H, rho_p10, tlist, [], [])
     

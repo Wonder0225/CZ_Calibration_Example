@@ -6,7 +6,7 @@ from modules.tomography import *
 
 if __name__ == "__main__":
     
-    version = "2.0"
+    version = "3.0"
     
     # calculate CZ properties
     n_process = 12
@@ -39,5 +39,6 @@ if __name__ == "__main__":
     ax1 = fig.add_subplot(1, 2, 1, projection="3d")
     ax2 = fig.add_subplot(1, 2, 2, projection="3d")
     qpt = ProcessTomography(optimal_data_save+rf"\optimal parameters (wc, w2)-{version}.npy")
-    qpt.tomography2(fig, ax1, ax2)
+    chi_ideal, chi_exper = qpt.tomography2(fig, ax1, ax2)
+    print("Gate fidelity: "+tomo_fidelity(chi_ideal, chi_exper))
     fig.savefig(rf"CZ_Calibration_Example\image\qpt\Quantum prosess tomography-{version}.png")

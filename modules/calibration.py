@@ -36,10 +36,11 @@ class Calibration():
             for w2_peak in self.w2_peak_array[w2_start:w2_end]: 
 
                 args = {
-                'coupler frequency': wc_min,
-                'qubit2 frequency': w2_peak,
-                'gate time': 60
-            }
+                    'coupler frequency': wc_min,
+                    'qubit2 frequency': w2_peak,
+                    'gate time': 60,
+                    'if_tuning': False
+                }
 
                 H = Hamiltonian_RWA(args)
 

@@ -7,7 +7,7 @@ from qutip import about
 
 if __name__ == "__main__":
     
-    qpt = ProcessTomography(r"CZ_Calibration_Example\data\optimal data\optimal parameters (wc, w2)-2.0.npy")
+    qpt = ProcessTomography(r"CZ_Calibration_Example\data\optimal data\optimal parameters (wc, w2)-3.0.npy")
     
     fig = plt.figure()
     
@@ -19,5 +19,5 @@ if __name__ == "__main__":
     print(chi_real.trace())
     print(chi_ideal.trace())
     
-    # plt.show()
+    plt.show()
     print(about())

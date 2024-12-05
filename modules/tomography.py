@@ -9,7 +9,19 @@ def tomo_fidelity(chi_ideal, chi_exper):
     
     '''Calculate fidelity with the consequence of process tomography'''
     
-    return (abs((chi_ideal*chi_exper))).trace()
+    return abs((np.sqrt(np.sqrt(chi_ideal) * chi_exper * np.sqrt(chi_ideal))).trace() ** 2)
+
+def dphase(H):
+    '''Calculate dynamic phase'''
+    
+    tlist = np.linspace(0, 60, 70)
+    result_010 = mesolve(H, psi_010, tlist, [], [])
+    result_100 = mesolve(H, psi_100, tlist, [], [])
+    
+    phi_q2 = phase(1, psi_010.dag()*result_010.states[-1])
+    phi_q1 = phase(1, psi_100.dag()*result_100.states[-1])
+    
+    return phi_q1, phi_q2
 
 class ProcessTomography():
     '''Run quantum process tomography (QPT)'''
@@ -24,7 +36,8 @@ class ProcessTomography():
         args = {
             'gate time': 60,
             'coupler frequency': self.wc_min,
-            'qubit2 frequency': self.w2_peak
+            'qubit2 frequency': self.w2_peak,
+            'if_tuning': False
         }
         self.H = Hamiltonian_RWA(args)
         
@@ -33,18 +46,6 @@ class ProcessTomography():
     def get_optimal_hamiltonian(self):
         
         return self.H
-    
-    def dphase(self):
-        '''Calculate dynamic phase'''
-        
-        tlist = np.linspace(0, 60, 70)
-        result_010 = mesolve(self.H, psi_010, tlist, [], [])
-        result_100 = mesolve(self.H, psi_100, tlist, [], [])
-        
-        phi_q2 = phase(1, psi_010.dag()*result_010.states[-1])
-        phi_q1 = phase(1, psi_100.dag()*result_100.states[-1])
-        
-        return phi_q1, phi_q2
         
     def tomography2(self, fig, ax1, ax2):
         '''QPT under Two Energy Level approximation'''
@@ -55,10 +56,10 @@ class ProcessTomography():
         Ucz_ideal = gates.cz_gate()
         Ucz_ideal_super = to_super(Ucz_ideal)
         chi_ideal = tomography.qpt(Ucz_ideal_super, basis)
-        tomography.qpt_plot_combined(chi_ideal, label, fig=fig, ax=ax1, threshold=0.01)
+        tomography.qpt_plot_combined(chi_ideal, label, fig=fig, ax=ax1, threshold=0.001)
         
         # dynamic phase correction
-        [dphase_q1, dphase_q2] = self.dphase()
+        [dphase_q1, dphase_q2] = dphase(self.H)
         Uphase_corr = qeye([2, 2]) + (np.exp(-1j*dphase_q1)-1) * ket2dm(psi_10) + (np.exp(-1j*dphase_q2)-1) * ket2dm(psi_01) + (np.exp(-1j*(dphase_q1+dphase_q2))-1) * ket2dm(psi_11)
         
         # run qpt
@@ -77,6 +78,6 @@ class ProcessTomography():
         Ucz_super = to_super(Ucz)
         chi_simulate = tomography.qpt(Ucz_super, basis)
         if ax2 != None:
-            tomography.qpt_plot_combined(chi_simulate, label, fig=fig, ax= ax2, threshold=0.01)
+            tomography.qpt_plot_combined(chi_simulate, label, fig=fig, ax= ax2, threshold=0.001)
         
         return chi_ideal, chi_simulate
